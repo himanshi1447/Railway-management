@@ -1,0 +1,77 @@
+# Dependency directories
+node_modules/
+/.pnp
+.pnp.js
+
+# Compiled output
+/build
+/dist
+/out
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs
+*.log
+
+# IDE and Editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Backend specific
+/server/node_modules
+/server/.env
+
+# Frontend specific
+/client/node_modules
+/client/build
+/client/.env
+
+# MongoDB local data
+/data
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+/coverage
+.nyc_output
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+.sass-cache/
+
+# Package lock files (optional, depending on your preference)
+package-lock.json
+yarn.lock
+
+# React build artifacts
+.react-email-temp/
+
+# Dependency caches
+.npm
+.eslintcache
+.cache
+
+# Serverless directories
+.serverless/
+
+# Misc
+.next
+.nuxt
+.docusaurus
+.cache-loader
