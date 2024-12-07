@@ -1,5 +1,5 @@
 // models/bookingModel.js
-const { pool } = require('../config/database');
+const { pool } = require("../config/database");
 
 class BookingModel {
   // Create a new booking
@@ -7,7 +7,7 @@ class BookingModel {
     const { user_id, train_id, seats_booked } = bookingData;
 
     const [result] = await pool.query(
-      'INSERT INTO bookings (user_id, train_id, seats_booked) VALUES (?, ?, ?)',
+      "INSERT INTO bookings (user_id, train_id, seats_booked) VALUES (?, ?, ?)",
       [user_id, train_id, seats_booked]
     );
 
@@ -48,7 +48,7 @@ class BookingModel {
 
       // Get booking details
       const [bookings] = await connection.query(
-        'SELECT * FROM bookings WHERE id = ? AND user_id = ?',
+        "SELECT * FROM bookings WHERE id = ? AND user_id = ?",
         [booking_id, user_id]
       );
 
@@ -61,15 +61,12 @@ class BookingModel {
 
       // Refund seats to train
       await connection.query(
-        'UPDATE trains SET available_seats = available_seats + ? WHERE id = ?',
+        "UPDATE trains SET available_seats = available_seats + ? WHERE id = ?",
         [booking.seats_booked, booking.train_id]
       );
 
       // Delete booking
-      await connection.query(
-        'DELETE FROM bookings WHERE id = ?',
-        [booking_id]
-      );
+      await connection.query("DELETE FROM bookings WHERE id = ?", [booking_id]);
 
       // Commit transaction
       await connection.commit();

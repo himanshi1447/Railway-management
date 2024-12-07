@@ -1,6 +1,6 @@
 // config/database.js
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+const mysql = require("mysql2/promise");
+require("dotenv").config();
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -9,7 +9,7 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
 
 // Create tables on startup
@@ -53,13 +53,13 @@ const createTables = async () => {
       )
     `);
 
-    console.log('Tables created successfully');
+    console.log("Tables created successfully");
   } catch (error) {
-    console.error('Error creating tables:', error);
+    console.error("Error creating tables:", error);
   }
 };
 
 module.exports = {
   pool,
-  createTables
+  createTables,
 };

@@ -1,5 +1,5 @@
 // controllers/bookingController.js
-const { pool } = require('../config/database');
+const { pool } = require("../config/database");
 
 const bookSeat = async (req, res) => {
   const connection = await pool.getConnection();
@@ -13,13 +13,13 @@ const bookSeat = async (req, res) => {
 
     // Lock the train row to prevent concurrent modifications
     const [trains] = await connection.query(
-      'SELECT * FROM trains WHERE id = ? FOR UPDATE', 
+      "SELECT * FROM trains WHERE id = ? FOR UPDATE",
       [train_id]
     );
 
     if (trains.length === 0) {
       await connection.rollback();
-      return res.status(404).json({ error: 'Train not found' });
+      return res.status(404).json({ error: "Train not found" });
     }
 
     const train = trains[0];
@@ -27,27 +27,27 @@ const bookSeat = async (req, res) => {
     // Check seat availability
     if (train.available_seats < seats_to_book) {
       await connection.rollback();
-      return res.status(400).json({ error: 'Insufficient seats available' });
+      return res.status(400).json({ error: "Insufficient seats available" });
     }
 
     // Update available seats
     await connection.query(
-      'UPDATE trains SET available_seats = available_seats - ? WHERE id = ?',
+      "UPDATE trains SET available_seats = available_seats - ? WHERE id = ?",
       [seats_to_book, train_id]
     );
 
     // Create booking
     const [bookingResult] = await connection.query(
-      'INSERT INTO bookings (user_id, train_id, seats_booked) VALUES (?, ?, ?)',
+      "INSERT INTO bookings (user_id, train_id, seats_booked) VALUES (?, ?, ?)",
       [user_id, train_id, seats_to_book]
     );
 
     // Commit transaction
     await connection.commit();
 
-    res.status(201).json({ 
-      message: 'Booking successful', 
-      bookingId: bookingResult.insertId 
+    res.status(201).json({
+      message: "Booking successful",
+      bookingId: bookingResult.insertId,
     });
   } catch (error) {
     // Rollback in case of error
@@ -85,7 +85,7 @@ const getBookingDetails = async (req, res) => {
     );
 
     if (bookings.length === 0) {
-      return res.status(404).json({ error: 'Booking not found' });
+      return res.status(404).json({ error: "Booking not found" });
     }
 
     res.json(bookings[0]);
@@ -97,5 +97,5 @@ const getBookingDetails = async (req, res) => {
 module.exports = {
   bookSeat,
   getUserBookings,
-  getBookingDetails
+  getBookingDetails,
 };

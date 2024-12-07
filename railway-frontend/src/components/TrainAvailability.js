@@ -1,23 +1,26 @@
 // src/components/TrainAvailability.js
-import React, { useState } from 'react';
-import apiService from '../services/apiservice';
-import { useAuth } from '../contexts/authContext';
+import React, { useState } from "react";
+import apiService from "../services/apiservice";
+import { useAuth } from "../contexts/authContext";
 
 const TrainAvailability = () => {
-  const [source, setSource] = useState('');
-  const [destination, setDestination] = useState('');
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
   const [trains, setTrains] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const { token } = useAuth();
 
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const response = await apiService.getTrainAvailability(source, destination);
+      const response = await apiService.getTrainAvailability(
+        source,
+        destination
+      );
       setTrains(response.data);
-      setError('');
+      setError("");
     } catch (err) {
-      setError('No trains found');
+      setError("No trains found");
       setTrains([]);
     }
   };
@@ -25,9 +28,9 @@ const TrainAvailability = () => {
   const handleBookSeat = async (trainId) => {
     try {
       await apiService.bookSeat({ train_id: trainId, seats_to_book: 1 }, token);
-      alert('Seat booked successfully!');
+      alert("Seat booked successfully!");
     } catch (err) {
-      alert('Failed to book seat');
+      alert("Failed to book seat");
     }
   };
 
@@ -60,15 +63,13 @@ const TrainAvailability = () => {
       </form>
 
       {error && (
-        <div className="bg-red-100 text-red-800 p-3 rounded mb-4">
-          {error}
-        </div>
+        <div className="bg-red-100 text-red-800 p-3 rounded mb-4">{error}</div>
       )}
 
       <div className="grid gap-4">
         {trains.map((train) => (
-          <div 
-            key={train.id} 
+          <div
+            key={train.id}
             className="border p-4 rounded flex justify-between items-center"
           >
             <div>

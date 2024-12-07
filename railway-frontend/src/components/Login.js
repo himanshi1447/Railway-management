@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import apiService from '../services/apiservice';
-import { useAuth } from '../contexts/authContext';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apiService from "../services/apiservice";
+import { useAuth } from "../contexts/authContext";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -15,9 +15,9 @@ const Login = () => {
     try {
       const response = await apiService.login({ username, password });
       login(response.data.user, response.data.token);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (err) {
-      setError('Invalid credentials');
+      setError("Invalid credentials");
     }
   };
 
